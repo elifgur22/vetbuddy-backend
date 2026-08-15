@@ -1,6 +1,7 @@
 package com.vetbuddy.vetbuddy_backend.vaccination.service;
 
 import com.vetbuddy.vetbuddy_backend.vaccination.dto.CreateVaccinationRequest;
+import com.vetbuddy.vetbuddy_backend.vaccination.dto.UpdateVaccinationRequest;
 import com.vetbuddy.vetbuddy_backend.vaccination.dto.VaccinationResponse;
 
 import java.util.List;
@@ -13,4 +14,12 @@ public interface VaccinationService {
     );
 
     List<VaccinationResponse> getByPetId(Long petId);
+
+    VaccinationResponse update(
+            Long petId,
+            Long vaccinationId,
+            UpdateVaccinationRequest request
+    );
+
+    void delete(Long petId, Long vaccinationId);
 }

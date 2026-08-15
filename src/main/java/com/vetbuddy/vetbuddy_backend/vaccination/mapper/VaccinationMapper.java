@@ -3,6 +3,7 @@ package com.vetbuddy.vetbuddy_backend.vaccination.mapper;
 import com.vetbuddy.vetbuddy_backend.pet.domain.Pet;
 import com.vetbuddy.vetbuddy_backend.vaccination.domain.Vaccination;
 import com.vetbuddy.vetbuddy_backend.vaccination.dto.CreateVaccinationRequest;
+import com.vetbuddy.vetbuddy_backend.vaccination.dto.UpdateVaccinationRequest;
 import com.vetbuddy.vetbuddy_backend.vaccination.dto.VaccinationResponse;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +40,17 @@ public class VaccinationMapper {
                 vaccination.getCreatedAt(),
                 vaccination.getUpdatedAt()
         );
+    }
+
+    public void updateEntity(
+            Vaccination vaccination,
+            UpdateVaccinationRequest request
+    ) {
+        vaccination.setName(request.name());
+        vaccination.setVaccinationDate(request.vaccinationDate());
+        vaccination.setNextDoseDate(request.nextDoseDate());
+        vaccination.setVeterinarian(request.veterinarian());
+        vaccination.setNotes(request.notes());
+        vaccination.setCompleted(request.completed());
     }
 }

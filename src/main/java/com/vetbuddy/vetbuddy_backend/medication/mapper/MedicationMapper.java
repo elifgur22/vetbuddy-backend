@@ -3,6 +3,7 @@ package com.vetbuddy.vetbuddy_backend.medication.mapper;
 import com.vetbuddy.vetbuddy_backend.medication.domain.Medication;
 import com.vetbuddy.vetbuddy_backend.medication.dto.CreateMedicationRequest;
 import com.vetbuddy.vetbuddy_backend.medication.dto.MedicationResponse;
+import com.vetbuddy.vetbuddy_backend.medication.dto.UpdateMedicationRequest;
 import com.vetbuddy.vetbuddy_backend.pet.domain.Pet;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +40,16 @@ public class MedicationMapper {
                 medication.getCreatedAt(),
                 medication.getUpdatedAt()
         );
+    }
+    public void updateEntity(
+            Medication medication,
+            UpdateMedicationRequest request
+    ) {
+        medication.setName(request.name());
+        medication.setDose(request.dose());
+        medication.setStartDate(request.startDate());
+        medication.setEndDate(request.endDate());
+        medication.setTimes(request.times());
+        medication.setNotes(request.notes());
     }
 }

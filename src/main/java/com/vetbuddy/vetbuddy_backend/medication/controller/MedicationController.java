@@ -2,6 +2,7 @@ package com.vetbuddy.vetbuddy_backend.medication.controller;
 
 import com.vetbuddy.vetbuddy_backend.medication.dto.CreateMedicationRequest;
 import com.vetbuddy.vetbuddy_backend.medication.dto.MedicationResponse;
+import com.vetbuddy.vetbuddy_backend.medication.dto.UpdateMedicationRequest;
 import com.vetbuddy.vetbuddy_backend.medication.service.MedicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,30 @@ public class MedicationController {
             @PathVariable Long petId
     ) {
         return medicationService.getByPetId(petId);
+    }
+
+    @PutMapping("/{medicationId}")
+    public MedicationResponse update(
+            @PathVariable Long petId,
+            @PathVariable Long medicationId,
+            @Valid @RequestBody UpdateMedicationRequest request
+    ) {
+        return medicationService.update(
+                petId,
+                medicationId,
+                request
+        );
+    }
+
+    @DeleteMapping("/{medicationId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
+            @PathVariable Long petId,
+            @PathVariable Long medicationId
+    ) {
+        medicationService.delete(
+                petId,
+                medicationId
+        );
     }
 }

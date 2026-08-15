@@ -1,9 +1,11 @@
 package com.vetbuddy.vetbuddy_backend.medication.service;
 
+import com.vetbuddy.vetbuddy_backend.common.exception.MedicationNotFoundException;
 import com.vetbuddy.vetbuddy_backend.common.exception.PetNotFoundException;
 import com.vetbuddy.vetbuddy_backend.medication.domain.Medication;
 import com.vetbuddy.vetbuddy_backend.medication.dto.CreateMedicationRequest;
 import com.vetbuddy.vetbuddy_backend.medication.dto.MedicationResponse;
+import com.vetbuddy.vetbuddy_backend.medication.dto.UpdateMedicationRequest;
 import com.vetbuddy.vetbuddy_backend.medication.mapper.MedicationMapper;
 import com.vetbuddy.vetbuddy_backend.medication.repository.MedicationRepository;
 import com.vetbuddy.vetbuddy_backend.pet.domain.Pet;
@@ -51,5 +53,47 @@ public class MedicationServiceImpl implements MedicationService {
                 .stream()
                 .map(medicationMapper::toResponse)
                 .toList();
+    }
+
+    @Override
+    public MedicationResponse update(
+            Long petId,
+            Long medicationId,
+            UpdateMedicationRequest request
+    ) {
+        final Medication medication =
+                medicationRepository
+                        .findByIdAndPetId(medicationId, petId)
+                        .orElseThrow(
+                                () -> new MedicationNotFoundException(
+                                        medicationId
+                                )
+                        );
+
+        medicationMapper.updateEntity(
+                medication,
+                request
+        );
+
+        return medicationMapper.toResponse(
+                medicationRepository.save(medication)
+        );
+    }
+
+    @Override
+    public void delete(
+            Long petId,
+            Long medicationId
+    ) {
+        final Medication medication =
+                medicationRepository
+                        .findByIdAndPetId(medicationId, petId)
+                        .orElseThrow(
+                                () -> new MedicationNotFoundException(
+                                        medicationId
+                                )
+                        );
+
+        medicationRepository.delete(medication);
     }
 }

@@ -1,10 +1,12 @@
 package com.vetbuddy.vetbuddy_backend.vaccination.service;
 
 import com.vetbuddy.vetbuddy_backend.common.exception.PetNotFoundException;
+import com.vetbuddy.vetbuddy_backend.common.exception.VaccinationNotFoundException;
 import com.vetbuddy.vetbuddy_backend.pet.domain.Pet;
 import com.vetbuddy.vetbuddy_backend.pet.repository.PetRepository;
 import com.vetbuddy.vetbuddy_backend.vaccination.domain.Vaccination;
 import com.vetbuddy.vetbuddy_backend.vaccination.dto.CreateVaccinationRequest;
+import com.vetbuddy.vetbuddy_backend.vaccination.dto.UpdateVaccinationRequest;
 import com.vetbuddy.vetbuddy_backend.vaccination.dto.VaccinationResponse;
 import com.vetbuddy.vetbuddy_backend.vaccination.mapper.VaccinationMapper;
 import com.vetbuddy.vetbuddy_backend.vaccination.repository.VaccinationRepository;
@@ -53,5 +55,47 @@ public class VaccinationServiceImpl implements VaccinationService {
                 .stream()
                 .map(vaccinationMapper::toResponse)
                 .toList();
+    }
+
+    @Override
+    public VaccinationResponse update(
+            Long petId,
+            Long vaccinationId,
+            UpdateVaccinationRequest request
+    ) {
+        final Vaccination vaccination =
+                vaccinationRepository
+                        .findByIdAndPetId(vaccinationId, petId)
+                        .orElseThrow(
+                                () -> new VaccinationNotFoundException(
+                                        vaccinationId
+                                )
+                        );
+
+        vaccinationMapper.updateEntity(
+                vaccination,
+                request
+        );
+
+        return vaccinationMapper.toResponse(
+                vaccinationRepository.save(vaccination)
+        );
+    }
+
+    @Override
+    public void delete(
+            Long petId,
+            Long vaccinationId
+    ) {
+        final Vaccination vaccination =
+                vaccinationRepository
+                        .findByIdAndPetId(vaccinationId, petId)
+                        .orElseThrow(
+                                () -> new VaccinationNotFoundException(
+                                        vaccinationId
+                                )
+                        );
+
+        vaccinationRepository.delete(vaccination);
     }
 }
