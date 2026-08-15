@@ -56,11 +56,25 @@ public class MedicationLogServiceImpl implements MedicationLogService {
             }
 
             for (String timeValue : medication.getTimes()) {
+
                 final LocalTime time = LocalTime.parse(timeValue);
+                final LocalDateTime scheduledAt =
+                        LocalDateTime.of(date, time);
+
+                final boolean alreadyExists =
+                        medicationLogRepository
+                                .existsByMedicationIdAndScheduledAt(
+                                        medication.getId(),
+                                        scheduledAt
+                                );
+
+                if (alreadyExists) {
+                    continue;
+                }
 
                 final MedicationLog log = MedicationLog.builder()
                         .medication(medication)
-                        .scheduledAt(LocalDateTime.of(date, time))
+                        .scheduledAt(scheduledAt)
                         .status(MedicationDoseStatus.PENDING)
                         .build();
 

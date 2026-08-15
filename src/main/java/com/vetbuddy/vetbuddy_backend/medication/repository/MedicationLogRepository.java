@@ -24,4 +24,9 @@ public interface MedicationLogRepository
             LocalDateTime from,
             LocalDateTime to
     );
+
+    boolean existsByMedicationIdAndScheduledAt(
+            Long medicationId,
+            LocalDateTime scheduledAt
+    );
 }
