@@ -44,6 +44,9 @@ databaseChangeLog:
               - column:
                   name: neutered
                   type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
 
               - column:
                   name: photo_url

@@ -1,5 +1,6 @@
 package com.vetbuddy.vetbuddy_backend.pet.service;
 
+import com.vetbuddy.vetbuddy_backend.common.exception.PetNotFoundException;
 import com.vetbuddy.vetbuddy_backend.pet.domain.Pet;
 import com.vetbuddy.vetbuddy_backend.pet.dto.CreatePetRequest;
 import com.vetbuddy.vetbuddy_backend.pet.dto.PetResponse;
@@ -63,9 +64,7 @@ public class PetServiceImpl implements PetService {
     private Pet findPet(Long id) {
         return petRepository.findById(id)
                 .orElseThrow(
-                        () -> new IllegalArgumentException(
-                                "Pet not found with id: " + id
-                        )
+                        () -> new PetNotFoundException(id)
                 );
     }
 }
