@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-vaccination-table
+      author: elif
+      changes:
+        - createTable:
+            tableName: vaccination
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: pet_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: vaccination_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: next_dose_date
+                  type: DATE
+
+              - column:
+                  name: veterinarian
+                  type: VARCHAR(150)
+
+              - column:
+                  name: notes
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: completed
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: vaccination
+            baseColumnNames: pet_id
+            referencedTableName: pet
+            referencedColumnNames: id
+            constraintName: fk_vaccination_pet
+            onDelete: CASCADE
