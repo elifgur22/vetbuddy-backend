@@ -1,0 +1,13 @@
+package com.vetbuddy.vetbuddy_backend;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class VetbuddyBackendApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

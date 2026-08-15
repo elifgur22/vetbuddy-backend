@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: vetbuddy-postgres
+    environment:
+      POSTGRES_DB: vetbuddy
+      POSTGRES_USER: vetbuddy
+      POSTGRES_PASSWORD: vetbuddy
+    ports:
+      - "5433:5432"
+    volumes:
+      - vetbuddy_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  vetbuddy_postgres_data:
