@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-medication-tables
+      author: elif
+      changes:
+        - createTable:
+            tableName: medication
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: pet_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: dose
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: start_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: end_date
+                  type: DATE
+
+              - column:
+                  name: notes
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: medication
+            baseColumnNames: pet_id
+            referencedTableName: pet
+            referencedColumnNames: id
+            constraintName: fk_medication_pet
+            onDelete: CASCADE
+
+        - createTable:
+            tableName: medication_time
+            columns:
+              - column:
+                  name: medication_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: medication_time
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: medication_time
+            baseColumnNames: medication_id
+            referencedTableName: medication
+            referencedColumnNames: id
+            constraintName: fk_medication_time_medication
+            onDelete: CASCADE
