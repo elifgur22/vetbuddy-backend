@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-pet-table
+      author: elif
+      changes:
+        - createTable:
+            tableName: pet
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: breed
+                  type: VARCHAR(100)
+
+              - column:
+                  name: gender
+                  type: VARCHAR(20)
+
+              - column:
+                  name: birth_date
+                  type: DATE
+
+              - column:
+                  name: weight
+                  type: NUMERIC(6,2)
+
+              - column:
+                  name: neutered
+                  type: BOOLEAN
+
+              - column:
+                  name: photo_url
+                  type: VARCHAR(500)
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
